@@ -1,0 +1,22 @@
+set style data lines
+set xlabel "Time (ms)"
+set ylabel "Voltage (V)"
+set xrange [0:200]
+set yrange [0:1.9]
+set key at screen 0.85, 0.4
+set key spacing 1.5
+set key nobox
+
+plot 'test.plot' using ($2*1e3):3 with lines lc rgb "#1f77b4" title 'Vpd', \
+     'test.plot' using ($2*1e6):4 with lines lc rgb "#ff7f0e" title 'Vcasc', \
+     'test.plot' using ($2*1e3):5 with lines lc rgb "#2ca02c" title 'Vg\_fb', \
+     'test.plot' using ($2*1e3):6 with lines lc rgb "#d62728" title 'Vipr', \
+     'test.plot' using ($2*1e3):7 with lines lc rgb "#9467bd" title 'Vidiff', \
+     'test.plot' using ($2*1e3):8 with lines lc rgb "#8c564b" title 'VnRstChAmp', \
+     'test.plot' using ($2*1e3):9 with lines lc rgb "#e377c2" title 'VIon', \
+     'test.plot' using ($2*1e3):10 with lines lc rgb "#7f7f7f" title 'VIOFF', \
+     'test.plot' using ($2*1e3):11 with lines lc rgb "#bcbd22" title 'Vreset', \
+     'test.plot' using ($2*1e3):12 with lines lc rgb "#17becf" title 'VON', \
+     'test.plot' using ($2*1e3):13 with lines lc rgb "#0000FF" title 'VnOFF', \
+     'test.plot' using ($2*1e3):14 with lines lc rgb "#FFA500" title 'Vdiff', \
+     'test.plot' using ($2*1e3):15 with lines lc rgb "#00FF00" title 'Vpr'

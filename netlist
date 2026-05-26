@@ -1,0 +1,86 @@
+*
+*---- act defproc: champ<> -----
+* raw ports:  in[0] in[1] in[2] out
+*
+.subckt champ in_50_6 in_51_6 in_52_6 out
+*.PININFO in_50_6:I in_51_6:I in_52_6:I out:O
+*.POWER VDD Vdd
+*.POWER GND GND
+*.POWER NSUB GND
+*.POWER PSUB Vdd
+*
+* --- node flags ---
+*
+* out (combinational)
+*
+* --- end node flags ---
+*
+M0_ GND in_51_6 out GND n W=0.9U L=0.6U
+M1_pass a in_52_6 out Vdd p W=3U L=0.6U
+M2_pass Vdd a out Vdd p W=3U L=0.6U
+C3_0 in_50_6 a 2e-13
+C4_1 a out 7e-15
+.ends
+*---- end of process: champ<> -----
+*
+*---- act defproc: comparators<> -----
+* raw ports:  in[0] in[1] out[0] out[1]
+*
+.subckt comparators in_50_6 in_51_6 out_50_6 out_51_6
+*.PININFO in_50_6:I in_51_6:I out_50_6:O out_51_6:O
+*.POWER VDD Vdd
+*.POWER GND GND
+*.POWER NSUB GND
+*.POWER PSUB Vdd
+*
+* --- node flags ---
+*
+* out_50_6 (combinational)
+* out_51_6 (combinational)
+*
+* --- end node flags ---
+*
+M0_ Vdd in_50_6 out_50_6 Vdd p W=1.5U L=0.6U
+M1_ Vdd in_50_6 out_51_6 Vdd p W=1.5U L=0.6U
+M2_ GND in_51_6 out_50_6 GND n W=0.9U L=0.6U
+M3_ GND in_51_6 out_51_6 GND n W=0.9U L=0.6U
+.ends
+*---- end of process: comparators<> -----
+*
+*---- act defproc: photoreceptor<> -----
+* raw ports:  in[0] in[1] in[2] in[3] out
+*
+.subckt photoreceptor in_50_6 in_51_6 in_52_6 in_53_6 out
+*.PININFO in_50_6:I in_51_6:I in_52_6:I in_53_6:I out:O
+*.POWER VDD Vdd
+*.POWER GND GND
+*.POWER NSUB GND
+*.POWER PSUB Vdd
+*
+* --- node flags ---
+*
+* out (combinational)
+*
+* --- end node flags ---
+*
+M0_ Vdd in_53_6 out Vdd p W=6U L=9U
+M1_ GND in_50_6 #5 GND n W=6U L=9U
+M2_pass in_50_6 in_52_6 out Vdd p W=6U L=9U
+M3_ #5 in_51_6 out GND n W=6U L=9U
+.ends
+*---- end of process: photoreceptor<> -----
+*
+*---- act defproc: pixel<> -----
+* raw ports:  Vpd Vcasc Vg_fb Vipr Vidiff nRstChAmp VIon VON VnOFF
+*
+.subckt pixel Vpd Vcasc Vg__fb Vipr Vidiff nRstChAmp VIon VON VnOFF
+*.PININFO Vpd:I Vcasc:I Vg__fb:I Vipr:I Vidiff:I nRstChAmp:I VIon:I VON:O VnOFF:O
+*.POWER VDD Vdd
+*.POWER GND GND
+*.POWER NSUB GND
+*.POWER PSUB Vdd
+xca0 Vpr Vidiff nRstChAmp Vdiff champ
+xch0 Vdiff VIon VON VnOFF comparators
+xpr0 Vpd Vcasc Vg__fb Vipr Vpr photoreceptor
+.ends
+*---- end of process: pixel<> -----

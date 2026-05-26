@@ -1,0 +1,35 @@
+import globals;
+
+// Change Amplifier
+// in[3] -> in[Vpr, Vidiff, nRstChAmp]
+// out -> Vdiff
+defproc champ (bool? in[3]; bool! out) {
+
+    // Internal linking variable
+    bool a;
+
+    // Default transistor size
+    pint s = 10;
+
+    prs {
+        //200fF cap
+        cap<200,100> (in[0], a)
+
+        //7fF cap
+        // From miller capacitance
+        //cap<7> (a, out)
+
+        // G = a, S = Vdd, D = out
+        // Unknown size
+        [keeper=0] passp<s> (a, Vdd, out)
+
+        // G = nRstChAmp, S = a, D = out
+        // Unknown size
+        [keeper=0] passp<s> (in[2], a, out)
+
+        // Vidiff, out-
+        [keeper=0] in[1] -> out-
+
+    }
+
+}

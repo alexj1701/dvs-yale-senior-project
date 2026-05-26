@@ -1,0 +1,29 @@
+
+
+// 4T Global shutter APS
+// in[4] -> in[Vpd, CR, TX, CS]
+// out -> apsOut
+defproc aps (bool? in[4], bool! out) {
+
+    bool a, b;
+    prs {
+
+        // .42/.35 um
+        // G = CR, S = Vdd, D = Vpd ??
+        [keeper=0] passn<42,35> (in[1], Vdd, in[0])
+
+        // .42/.4 um
+        // G = TX, S = Vpd, D = "a", gate of next
+        [keeper=0] passn<42,40> (in[2], in[0], a)
+
+        // .6/.35 um
+        // G = a, S = Vdd, D = b
+        [keeper=0] passn<60,35> (a, Vdd, b)
+
+        // .42/.35 um
+        // G = CS, S = b, D = out "apsOut"
+        [keeper=0] passn<70,35> (in[3], b, out)
+
+    }
+
+}

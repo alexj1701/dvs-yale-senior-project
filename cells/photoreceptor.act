@@ -1,0 +1,23 @@
+
+
+// Common-Gate Logarithmic photoreceptor
+// in[4] -> [Vpd, Vcasc, Vg_fb, Vipr]
+// out -> Vpr
+defproc photoreceptor (bool? in[4]; bool! out) {
+    
+    // For all: .2um/.3um
+    pint w = 20, l = 30;
+
+    prs { 
+
+        // Sending specific value fron the photodiode, so cant simply set high or low
+        // G = Vgfb, S = Vpd, D = Vpr "out"
+        [keeper=0] passp <w,l> (in[2], in[0], out) 
+
+        // Vpd & Vcasc -> out-
+        [keeper=0] in[0] <w,l> & in[1] -> out-
+
+        // ~Vipr -> out+
+        [keeper=0] ~in[3] <w,l> -> out+
+    }
+}
