@@ -1,0 +1,12 @@
+# Default: normalize all text files to LF in Git
+* text=auto eol=lf
+
+# Windows-specific scripts
+*.bat eol=crlf
+*.cmd eol=crlf
+
+# Shell/scripts used in Docker/Linux
+*.sh eol=lf
+Dockerfile eol=lf
+*.yml eol=lf
+*.yaml eol=lf
