@@ -1,6 +1,6 @@
 import globals; 
 
-// Common-Gate Logarithmic photoreceptor
+// Reset generator
 // in[3] -> [Vreset, VON, VnOFF]
 // out -> reset
 defproc reset (bool? in[3]; bool! out) {
@@ -19,10 +19,6 @@ defproc reset (bool? in[3]; bool! out) {
 
         // VnOFF NAND non
         in[2] & non => a-
-
-        //200fF cap
-        //cap<200> (out, GND)
-
 
     }
 }

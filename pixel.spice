@@ -15,11 +15,12 @@
 *
 * --- end node flags ---
 *
-xM0_ GND in_51_6 out GND sky130_fd_pr__nfet_01v8 W=0.45 L=0.15 nrs=1 nrd=1 nf=1
-xM1_pass a in_52_6 out Vdd sky130_fd_pr__pfet_01v8  W=0.75 L=0.15 nrs=1 nrd=1 nf=1
-xM2_pass Vdd a out Vdd sky130_fd_pr__pfet_01v8  W=0.75 L=0.15 nrs=1 nrd=1 nf=1
+xM0_N GND in_51_6 out GND sky130_fd_pr__nfet_01v8 W=0.45 L=0.15 nrs=1 nrd=1 nf=1
+xM1_Npass a in_52_6 out Vdd sky130_fd_pr__pfet_01v8  W=0.75 L=0.15 nrs=1 nrd=1 nf=1
 C_per_node_0 out GND 5e-15
-cx3_0 in_50_6 a 2e-11
+xM2_Npass Vdd a out Vdd sky130_fd_pr__pfet_01v8  W=0.75 L=0.15 nrs=1 nrd=1 nf=1
+cx3_0 in_50_6 a 2e-13
+cx4_1 a out 7e-15
 .ends
 *---- end of process: champ<> -----
 *
@@ -40,10 +41,10 @@ cx3_0 in_50_6 a 2e-11
 *
 * --- end node flags ---
 *
-xM0_ Vdd in_50_6 out_50_6 Vdd sky130_fd_pr__pfet_01v8  W=0.75 L=0.15 nrs=1 nrd=1 nf=1
-xM1_ Vdd in_50_6 out_51_6 Vdd sky130_fd_pr__pfet_01v8  W=0.75 L=0.15 nrs=1 nrd=1 nf=1
-xM2_ GND in_51_6 out_50_6 GND sky130_fd_pr__nfet_01v8 W=0.45 L=0.15 nrs=1 nrd=1 nf=1
-xM3_ GND in_52_6 out_51_6 GND sky130_fd_pr__nfet_01v8 W=0.45 L=0.15 nrs=1 nrd=1 nf=1
+xM0_N Vdd in_50_6 out_50_6 Vdd sky130_fd_pr__pfet_01v8  W=0.75 L=0.15 nrs=1 nrd=1 nf=1
+xM1_N Vdd in_50_6 out_51_6 Vdd sky130_fd_pr__pfet_01v8  W=0.75 L=0.15 nrs=1 nrd=1 nf=1
+xM2_N GND in_51_6 out_50_6 GND sky130_fd_pr__nfet_01v8 W=0.45 L=0.15 nrs=1 nrd=1 nf=1
+xM3_N GND in_52_6 out_51_6 GND sky130_fd_pr__nfet_01v8 W=0.45 L=0.15 nrs=1 nrd=1 nf=1
 C_per_node_0 out_50_6 GND 5e-15
 C_per_node_1 out_51_6 GND 5e-15
 .ends
@@ -65,11 +66,11 @@ C_per_node_1 out_51_6 GND 5e-15
 *
 * --- end node flags ---
 *
-xM0_ Vdd in_53_6 out Vdd sky130_fd_pr__pfet_01v8  W=1.5 L=2.25 nrs=1 nrd=1 nf=1
-xM1_ GND in_50_6 #5 GND sky130_fd_pr__nfet_01v8 W=1.5 L=2.25 nrs=1 nrd=1 nf=1
-xM2_pass in_50_6 in_52_6 out Vdd sky130_fd_pr__pfet_01v8  W=1.5 L=2.25 nrs=1 nrd=1 nf=1
+xM0_N Vdd in_53_6 out Vdd sky130_fd_pr__pfet_01v8  W=1.5 L=2.25 nrs=1 nrd=1 nf=1
+xM1_N GND in_50_6 #5 GND sky130_fd_pr__nfet_01v8 W=1.5 L=2.25 nrs=1 nrd=1 nf=1
 C_per_node_0 out GND 5e-15
-xM3_ #5 in_51_6 out GND sky130_fd_pr__nfet_01v8 W=1.5 L=2.25 nrs=1 nrd=1 nf=1
+xM2_Npass in_50_6 in_52_6 out Vdd sky130_fd_pr__pfet_01v8  W=1.5 L=2.25 nrs=1 nrd=1 nf=1
+xM3_N #5 in_51_6 out GND sky130_fd_pr__nfet_01v8 W=1.5 L=2.25 nrs=1 nrd=1 nf=1
 .ends
 *---- end of process: photoreceptor<> -----
 *
@@ -91,16 +92,16 @@ xM3_ #5 in_51_6 out GND sky130_fd_pr__nfet_01v8 W=1.5 L=2.25 nrs=1 nrd=1 nf=1
 *
 * --- end node flags ---
 *
-xM0_ Vdd a out Vdd sky130_fd_pr__pfet_01v8  W=0.75 L=0.15 nrs=1 nrd=1 nf=1
-xM1_ Vdd in_51_6 non Vdd sky130_fd_pr__pfet_01v8  W=0.75 L=0.15 nrs=1 nrd=1 nf=1
-xM2_ Vdd in_52_6 a Vdd sky130_fd_pr__pfet_01v8  W=0.75 L=0.15 nrs=1 nrd=1 nf=1
-xM3_ Vdd non a Vdd sky130_fd_pr__pfet_01v8  W=0.75 L=0.15 nrs=1 nrd=1 nf=1
-xM4_ GND in_50_6 out GND sky130_fd_pr__nfet_01v8 W=0.45 L=0.15 nrs=1 nrd=1 nf=1
-xM5_ GND in_51_6 non GND sky130_fd_pr__nfet_01v8 W=0.45 L=0.15 nrs=1 nrd=1 nf=1
-xM6_ GND in_52_6 #7 GND sky130_fd_pr__nfet_01v8 W=0.45 L=0.15 nrs=1 nrd=1 nf=1
+xM0_N Vdd a out Vdd sky130_fd_pr__pfet_01v8  W=0.75 L=0.15 nrs=1 nrd=1 nf=1
+xM1_N Vdd in_51_6 non Vdd sky130_fd_pr__pfet_01v8  W=0.75 L=0.15 nrs=1 nrd=1 nf=1
+xM2_N Vdd in_52_6 a Vdd sky130_fd_pr__pfet_01v8  W=0.75 L=0.15 nrs=1 nrd=1 nf=1
+xM3_N Vdd non a Vdd sky130_fd_pr__pfet_01v8  W=0.75 L=0.15 nrs=1 nrd=1 nf=1
+xM4_N GND in_50_6 out GND sky130_fd_pr__nfet_01v8 W=0.45 L=0.15 nrs=1 nrd=1 nf=1
+xM5_N GND in_51_6 non GND sky130_fd_pr__nfet_01v8 W=0.45 L=0.15 nrs=1 nrd=1 nf=1
+xM6_N GND in_52_6 #7 GND sky130_fd_pr__nfet_01v8 W=0.45 L=0.15 nrs=1 nrd=1 nf=1
 C_per_node_0 out GND 5e-15
 C_per_node_1 a GND 5e-15
-xM7_ #7 non a GND sky130_fd_pr__nfet_01v8 W=0.45 L=0.15 nrs=1 nrd=1 nf=1
+xM7_N #7 non a GND sky130_fd_pr__nfet_01v8 W=0.45 L=0.15 nrs=1 nrd=1 nf=1
 C_per_node_2 non GND 5e-15
 .ends
 *---- end of process: reset<> -----
