@@ -98,8 +98,5 @@ settling have to be checked in the transient tests.
 
 Claude (Anthropic) was used during this project for writing the test harnesses, plot
 scripts and shared include files under `Tests/` (and running them to check they work), for
-reading large simulation output files and reporting numbers from them at the author's
-direction, and for drafting documentation, including the initial draft of this README. The circuit design (the ACT
-cells), the choice of what to simulate (including specifications and parameters), the interpretation of results and the design decisions
-are the author's own. Some
-commits list Claude as a co-author. See [`AI_USAGE.md`](AI_USAGE.md) for the detailed record.
+reading large simulation output files, and for drafting documentation, including the initial draft of this README. The circuit design (the ACT cells), the choice of what to simulate (including specifications and parameters), the interpretation of results and the design decisions
+are the author's own. Some commits list Claude as a co-author. See [`AI_USAGE.md`](AI_USAGE.md) for the detailed record.
