@@ -16,16 +16,6 @@ DVS pixel first, then add the SciDVS improvements.
 
 **Advisor:** Rajit Manohar
 
-## Pixel signal chain
-
-1. **Logarithmic photoreceptor:** converts photocurrent into a voltage proportional to log intensity.
-2. **Change amplifier:** capacitive-gain amplifier that measures the change in log intensity since the last event.
-3. **ON/OFF comparators:** fire when the change crosses the ON or OFF threshold.
-4. **Reset logic** (`reset.act`): resets the change amplifier after each event, once acknowledged.
-
-Planned SciDVS improvements: an auto-centering preamplifier and a programmable low-pass
-buffer between the photoreceptor and the change amplifier.
-
 ## Tools
 
 - **[ACT](https://avlsi.csl.yale.edu/act/)**: circuit description; the SPICE netlist is generated from the ACT source
