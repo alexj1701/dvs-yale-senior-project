@@ -10,7 +10,7 @@ defproc pixel (bool? Vpd, Vcasc, Vg_fb, Vipr, Vidiff, VIon, VIoff, Vreset;
                bool! VON, VnOFF) {
 
     // Declare internal signals
-    bool  Vpr, Vdiff; VnRstChAmp;
+    bool  Vpr, Vdiff, VnRstChAmp;
     
 
     // Instantiate cells
