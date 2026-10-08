@@ -1,1 +1,8 @@
 BIAS_CHARACTERIZATION.md
+
+# Generated test outputs
+Tests/**/*.csv
+Tests/**/*.plot
+Tests/**/*.res
+Tests/**/*.png
+Tests/**/sweep_plots/

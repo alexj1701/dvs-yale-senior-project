@@ -6,11 +6,11 @@ import "cells/champ.act";
 import "cells/comparators.act";
 import "cells/reset.act";
 
-defproc pixel (bool? Vpd, Vcasc, Vg_fb, Vipr, Vidiff, VnRstChAmp, VIon, VIoff, Vreset;
+defproc pixel (bool? Vpd, Vcasc, Vg_fb, Vipr, Vidiff, VIon, VIoff, Vreset;
                bool! VON, VnOFF) {
 
     // Declare internal signals
-    bool  Vpr, Vdiff;
+    bool  Vpr, Vdiff, VnRstChAmp;
     
 
     // Instantiate cells

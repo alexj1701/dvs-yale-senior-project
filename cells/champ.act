@@ -13,15 +13,14 @@ defproc champ (bool? in[3]; bool! out) {
 
     prs {
         //200fF cap
-        cap<200,100> (in[0], a)
+        cap<200> (in[0], a)
 
         //7fF cap
-        // From miller capacitance
-        //cap<7> (a, out)
+        cap<7> (a, out)
 
         // G = a, S = Vdd, D = out
         // Unknown size
-        [keeper=0] passp<s> (a, Vdd, out)
+        [keeper=0] passp<s, 7> (a, Vdd, out)
 
         // G = nRstChAmp, S = a, D = out
         // Unknown size
