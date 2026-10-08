@@ -1,7 +1,7 @@
 # An Event-Based Imager
 
 A Yale EECS Senior project by Alex Johnson: the design of an event-based image sensor
-(a dynamic vision sensor, or "event camera") pixel in the SkyWater SKY130 process.
+(a dynamic vision sensor, or "event camera") in the SkyWater SKY130 process.
 
 Unlike a conventional camera, which captures full frames at a fixed rate, each pixel in an
 event camera works independently and reports only *changes* in brightness. When the log
@@ -103,15 +103,6 @@ Tests available so far:
 
 DC sweeps hold the capacitors open, so they show the static response only; stability and
 settling have to be checked in the transient tests.
-
-## Status
-
-- [x] Test harness with log-intensity stimulus and reset stand-in
-- [ ] Photoreceptor bias characterization (in progress: stability and supply headroom at 1.8 V; 3.3 V devices under consideration)
-- [ ] Change amplifier and comparator bias characterization
-- [ ] Layout and post-layout simulation
-- [ ] Pixel array and periphery (arbitration and readout)
-- [ ] SciDVS improvements
 
 ## AI usage disclosure
 
