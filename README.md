@@ -1,7 +1,7 @@
 # An Event-Based Imager
 
 A Yale EECS Senior project by Alex Johnson: the design of an event-based image sensor
-(a dynamic vision sensor, or "event camera") pixel in the SkyWater SKY130 process.
+(a dynamic vision sensor, or "event camera") in the SkyWater SKY130 process.
 
 Unlike a conventional camera, which captures full frames at a fixed rate, each pixel in an
 event camera works independently and reports only *changes* in brightness. When the log
@@ -15,16 +15,6 @@ The pixel design follows the architecture of **SciDVS** (Graça, Zhou, McReynold
 DVS pixel first, then add the SciDVS improvements.
 
 **Advisor:** Rajit Manohar
-
-## Pixel signal chain
-
-1. **Logarithmic photoreceptor:** converts photocurrent into a voltage proportional to log intensity.
-2. **Change amplifier:** capacitive-gain amplifier that measures the change in log intensity since the last event.
-3. **ON/OFF comparators:** fire when the change crosses the ON or OFF threshold.
-4. **Reset logic** (`reset.act`): resets the change amplifier after each event, once acknowledged.
-
-Planned SciDVS improvements: an auto-centering preamplifier and a programmable low-pass
-buffer between the photoreceptor and the change amplifier.
 
 ## Tools
 
@@ -104,21 +94,9 @@ Tests available so far:
 DC sweeps hold the capacitors open, so they show the static response only; stability and
 settling have to be checked in the transient tests.
 
-## Status
-
-- [x] Test harness with log-intensity stimulus and reset stand-in
-- [ ] Photoreceptor bias characterization (in progress: stability and supply headroom at 1.8 V; 3.3 V devices under consideration)
-- [ ] Change amplifier and comparator bias characterization
-- [ ] Layout and post-layout simulation
-- [ ] Pixel array and periphery (arbitration and readout)
-- [ ] SciDVS improvements
-
 ## AI usage disclosure
 
 Claude (Anthropic) was used during this project for writing the test harnesses, plot
 scripts and shared include files under `Tests/` (and running them to check they work), for
-reading large simulation output files and reporting numbers from them at the author's
-direction, and for drafting documentation, including the initial draft of this README. The circuit design (the ACT
-cells), the choice of what to simulate (including specifications and parameters), the interpretation of results and the design decisions
-are the author's own. Some
-commits list Claude as a co-author. See [`AI_USAGE.md`](AI_USAGE.md) for the detailed record.
+reading large simulation output files, and for drafting documentation, including the initial draft of this README. The circuit design (the ACT cells), the choice of what to simulate (including specifications and parameters), the interpretation of results and the design decisions
+are the author's own. Some commits list Claude as a co-author. See [`AI_USAGE.md`](AI_USAGE.md) for the detailed record.
