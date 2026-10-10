@@ -59,10 +59,10 @@ set title "VON, VnOFF, VnRstChAmp, Vreset"
 set xlabel "Time (ms)"
 set ylabel "Voltage (V)"
 set format x "%g"
-plot 'tb_all_fast_small.csv' skip 1 using ($1*1e3):7 lw 2 lc rgb "#9467bd" title "VON", \
-     'tb_all_fast_small.csv' skip 1 using ($1*1e3):8 lw 2 lc rgb "#17becf" title "VnOFF", \
-     'tb_all_fast_small.csv' skip 1 using ($1*1e3):9 lw 2 lc rgb "#8c564b" title "VnRstChAmp", \
-     'tb_all_fast_small.csv' skip 1 using ($1*1e3):10 lw 3 lc rgb "red" title "Vreset"
+plot 'tb_all_fast_small.csv' skip 1 using ($1*1e3):7 lw 3 lc rgb "#9467bd" title "VON", \
+     'tb_all_fast_small.csv' skip 1 using ($1*1e3):8 lw 3 lc rgb "#17becf" title "VnOFF", \
+     'tb_all_fast_small.csv' skip 1 using ($1*1e3):9 lw 1 lc rgb "#8c564b" title "VnRstChAmp", \
+     'tb_all_fast_small.csv' skip 1 using ($1*1e3):10 lw 1 lc rgb "red" title "Vreset"
 
 unset multiplot
 set output

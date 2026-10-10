@@ -8,8 +8,7 @@
 * options, supplies, models, pixel.spice
 .inc ../../common.inc
 
-xpixel Vpd Vcasc Vg_fb Vipr Vidiff VIon VIoff Vreset VON VnOFF pixel
-
+xpixel Vpd Vcasc Vg_fb Vipr Vidiff VIon VIoff Vreset Vref VON VnOFF pixel
 * ---- bias voltages: edit the .param values here ----
 .param Vcasc_val  = .8
 .param Vg_fb_val  = 1.1
@@ -17,6 +16,8 @@ xpixel Vpd Vcasc Vg_fb Vipr Vidiff VIon VIoff Vreset VON VnOFF pixel
 .param Vidiff_val = .250
 .param VIon_val   = .275
 .param VIoff_val  = .200
+* Vref: gate bias of the weak pFET in the reset cell's pull-up (1.4 V = weakly inverted)
+.param Vref_val   = 1.4
 
 vcasc0      Vcasc       GND DC {Vcasc_val}
 vgfb0       Vg_fb       GND DC {Vg_fb_val}
@@ -24,6 +25,7 @@ vipr0       Vipr        GND DC {Vipr_val}
 vidiff0     Vidiff      GND DC {Vidiff_val}
 vion0       VIon        GND DC {VIon_val}
 vioff0      VIoff       GND DC {VIoff_val}
+vref0       Vref        GND DC {Vref_val}
 
 * ---- Vreset: start-up pulse OR delayed event ----
 * Start-up: Vreset is high for the first 1 ms, then low.

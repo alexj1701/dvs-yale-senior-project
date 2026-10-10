@@ -8,15 +8,15 @@
 * options, supplies, models, pixel.spice
 .inc ../../common.inc
 
-xpixel Vpd Vcasc Vg_fb Vipr Vidiff VIon VIoff Vreset VON VnOFF pixel
-
+xpixel Vpd Vcasc Vg_fb Vipr Vidiff VIon VIoff Vreset Vref VON VnOFF pixel
 * ---- bias voltages: edit the .param values here ----
 .param Vcasc_val  = .8
-.param Vg_fb_val  = 1.0
-.param Vipr_val   = .74
-.param Vidiff_val = .250
-.param VIon_val   = .275
-.param VIoff_val  = .200
+.param Vg_fb_val  = 0.8
+.param Vipr_val   = 0.74
+.param Vidiff_val = .40
+.param VIon_val   = .42
+.param VIoff_val  = .38
+.param Vref_val   = 1.3
 
 vcasc0      Vcasc       GND DC {Vcasc_val}
 vgfb0       Vg_fb       GND DC {Vg_fb_val}
@@ -24,6 +24,7 @@ vipr0       Vipr        GND DC {Vipr_val}
 vidiff0     Vidiff      GND DC {Vidiff_val}
 vion0       VIon        GND DC {VIon_val}
 vioff0      VIoff       GND DC {VIoff_val}
+vref0       Vref        GND DC {Vref_val}
 
 * ---- sweep: use ONE .step line, comment out the rest ----
 * Each step is a full transient run. To sweep a different bias, comment out the active
@@ -34,11 +35,12 @@ vioff0      VIoff       GND DC {VIoff_val}
 
 *.step Vg_fb_val LIST 1.0 1.1 1.2
 
-*.step Vidiff_val LIST 0.1 0.2 0.3 0.4 0.5 0.6
+*.step Vidiff_val LIST 0.1 0.3 0.5 0.7 0.9 1.1
 
 *.step VIon_val   LIST 0.1 0.2 0.3 0.4 0.5 0.6
 
 *.step VIoff_val  LIST 0.1 0.2 0.3 0.4 0.5 0.6
+*.step Vref_val   LIST 1.2 1.3 1.4 1.5 1.6
 
 * To sweep two biases at once, leave two .step lines active (they nest: every combination runs).
 
@@ -52,7 +54,7 @@ Vstart nstart GND PWL 0 1.8 1m 1.8 1.01m 0
 .param Vth = 0.9
 .param k   = 50
 * EventEn = 0 disables the event path (only the start-up pulse resets); set to 1 to enable.
-.param EventEn = 0
+.param EventEn = 1
 Bev nev GND V={EventEn*1.8*(1-(1-0.5*(1+tanh(k*(V(VON)-Vth))))*(1-0.5*(1+tanh(k*(Vth-V(VnOFF))))))}
 
 *    RC delay: the delayed signal crosses Vth about 0.69*R*C after the event (1 Meg * 1 n = 1 ms tau)
