@@ -1,23 +1,23 @@
 import globals;
-import globals;
 
 // Common-Gate Logarithmic photoreceptor
 // in[4] -> [Vpd, Vcasc, Vg_fb, Vipr]
 // out -> Vpr
 defproc photoreceptor (bool? in[4]; bool! out) {
     
-    // For all: .2um/.3um
-    pint w = 20, l = 30;
+    
+    // pint w = 20, l = 30;
+    pint w = 8, l = 12;
 
     prs { 
-        
+
         //temporarily modelling photodiode capacitance
         cap<50> (in[0], GND)
 
         // Mg,fb
         // Sending specific value from the photodiode, so cant simply set high or low
         // G = Vgfb, S = Vpd, D = Vpr "out"
-        [keeper=0] passp <2*w,0.4*l> (in[2], in[0], out) 
+        [keeper=0] passp <w,l> (in[2], in[0], out) 
 
         // Vpd & Vcasc -> out-
         [keeper=0] in[0] <w,l> & in[1] -> out-

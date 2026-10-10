@@ -8,8 +8,8 @@ defproc champ (bool? in[3]; bool! out) {
     // Internal linking variable
     bool a;
 
-    // Default transistor size
-    pint s = 10;
+    pint wp = 20, lp = 160;
+    pint wn = 60, ln = 68;
 
     prs {
         //200fF cap
@@ -18,16 +18,18 @@ defproc champ (bool? in[3]; bool! out) {
         //7fF cap
         cap<7> (a, out)
 
-        // G = a, S = Vdd, D = out
-        // Unknown size
-        [keeper=0] passp<s, 7> (a, Vdd, out)
-
         // G = nRstChAmp, S = a, D = out
         // Unknown size
-        [keeper=0] passp<s> (in[2], a, out)
+        [keeper=0] passp (in[2], a, out)
 
+        // PMOS
+        // G = a, S = Vdd, D = out
+        // Unknown size
+        [keeper=0] passp <wp, lp> (a, Vdd, out)
+
+        // NMOS Current sink
         // Vidiff, out-
-        [keeper=0] in[1] -> out-
+        [keeper=0] in[1] <wn, ln> -> out-
 
     }
 
