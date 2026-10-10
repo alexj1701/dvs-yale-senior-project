@@ -6,7 +6,7 @@ import "cells/champ.act";
 import "cells/comparators.act";
 import "cells/reset.act";
 
-defproc pixel (bool? Vpd, Vcasc, Vg_fb, Vipr, Vidiff, VIon, VIoff, Vreset;
+defproc pixel (bool? Vpd, Vcasc, Vg_fb, Vipr, Vidiff, VIon, VIoff, Vreset, Vref;
                bool! VON, VnOFF) {
 
     // Declare internal signals
@@ -17,7 +17,7 @@ defproc pixel (bool? Vpd, Vcasc, Vg_fb, Vipr, Vidiff, VIon, VIoff, Vreset;
     photoreceptor pr0({Vpd, Vcasc, Vg_fb, Vipr}, Vpr);
     champ ca0({Vpr, Vidiff, VnRstChAmp}, Vdiff);
     comparators ch0({Vdiff, VIon, VIoff}, {VON, VnOFF});
-    reset r0({Vreset, VON, VnOFF}, VnRstChAmp);
+    reset r0({Vreset, VON, VnOFF}, Vref, VnRstChAmp);
     
 
 }
