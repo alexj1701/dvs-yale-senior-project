@@ -4,3 +4,9 @@ Tests/**/*.plot
 Tests/**/*.res
 Tests/**/*.png
 Tests/**/sweep_plots/
+
+pixel_versions/**/*.csv
+pixel_versions/**/*.plot
+pixel_versions/**/*.res
+pixel_versions/**/*.png
+pixel_versions/**/*.sweep_plots/
