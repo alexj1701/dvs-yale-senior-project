@@ -1,0 +1,21 @@
+
+
+// Programmable Event Threshold Comparators
+// in[3] -> in[Vdiff, VIon, VIoff]
+// out[2] -> out[VON, VnOFF]
+defproc comparators (bool? in[3]; bool! out[2]) {
+    
+    pint wp = 20, lp = 160;
+    pint wn = 60, ln = 68;
+
+    prs {
+        
+    [keeper=0] ~in[0] <wp,lp> -> out[0]+
+    [keeper=0] in[1] <wn,ln> -> out[0]-
+
+    [keeper=0] ~in[0] <wp,lp> -> out[1]+
+    [keeper=0] in[2] <wn,ln> -> out[1]-
+
+    }
+
+}

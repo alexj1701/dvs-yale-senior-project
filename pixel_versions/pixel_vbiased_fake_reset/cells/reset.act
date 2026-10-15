@@ -1,0 +1,28 @@
+import globals; 
+
+// Reset generator.
+// in[3] -> [vReset, VON, VnOFF]
+// vref -> Vref
+// out -> VnRstChAmp
+defproc reset (bool? in[3]; bool? vref; bool! out) {
+    
+    bool non, event;
+    prs { 
+
+        // VON -> non-
+        in[1] => non-
+
+        // VnOFF NAND non
+        // a- means reset is high and no event
+        // a+ means reset is low and an event has occurred
+        in[2] & non => event-
+
+        
+        // forecReset or an event pull the output down
+        [keeper=0] in[0] | event -> out-
+
+        // ~forceReset and ~event pull the output up. The vref biased transister delays the output.
+        [keeper=0] ~in[0] & ~event & ~vref<10,20> -> out+
+
+    }
+}
