@@ -1,0 +1,19 @@
+import globals;
+import std::cells;
+open std::cells;
+import "cells/core/photoreceptor.act";
+import "cells/core/champ.act";
+import "cells/core/comparators.act";
+
+defproc pixel_core (bool? Vpd, Vcasc, Vg_fb, Vipr, Vidiff, VnRstChAmp, VIon, VIoff;
+               bool! VON, VnOFF) {
+
+    // Declare internal signals
+    bool  Vpr, Vdiff;
+    
+    // Instantiate cells
+    photoreceptor pr0({Vpd, Vcasc, Vg_fb, Vipr}, Vpr);
+    champ ca0({Vpr, Vidiff, VnRstChAmp}, Vdiff);
+    comparators ch0({Vdiff, VIon, VIoff}, {VON, VnOFF});    
+
+}

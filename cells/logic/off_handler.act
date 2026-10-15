@@ -1,0 +1,26 @@
+import globals; 
+
+// Handler for OFF events
+// RA = Row Acknowledge
+// out -> Row Request (RR), Column Request OFF (CROFF)
+
+defproc off_handler (bool? VIoffh, VnOFF, RA; bool! RR, CROFF) {
+    
+    // Declare internal signals
+    bool a;
+
+    prs { 
+
+        // An off event will pull 'a' high
+        [keeper=0] ~VnOFF -> a+
+        // This causes RR to be pulled low
+        [keeper = 0] a -> RR-
+
+        // When there is no off event, 'a' is pulled low and RR is unaffected
+        [keeper=0] VIoffh -> a-
+
+        // When there is an off event and 'a' is high, and the row is acknowledged, CROFF is pulled low
+        [keeper=0] RA & a -> CROFF-
+
+    }
+}
