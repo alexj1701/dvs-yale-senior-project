@@ -13,7 +13,7 @@ defproc reset (bool? Vref, RA, CA; bool! out) {
 
         [keeper=0] ~Vref<12,22> -> out+
 
-        [keeper=0] RA & CA -> out-
+        [keeper=0] RA<10,15> & CA<10,15> -> out-
 
         cap<32> (Vdd, out)
 
