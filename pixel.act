@@ -3,14 +3,15 @@ import std::cells;
 open std::cells;
 import "cells/pixel_core.act";
 import "cells/pixel_logic.act";
+import "cells/test_ack.act";
 
-defproc pixel (bool? Vpd, Vcasc, Vg_fb, Vipr, Vidiff, VIon, VIoff, Vref, VIoffh, RA, CA;
+defproc pixel (bool? Vpd, Vcasc, Vg_fb, Vipr, Vidiff, Vreset, VIon, VIoff, Vref, VIoffh, RA, CA;
                bool! RR, CRON, CROFF) {
 
     // Internal signals
-    bool Vreset, VON, VnOFF;
+    bool VON, VnOFF;
 
     pixel_core pc0(Vpd, Vcasc, Vg_fb, Vipr, Vidiff, Vreset, VIon, VIoff, VON, VnOFF);
     pixel_logic pl0(Vref, VIoffh, VON, VnOFF, RA, CA, Vreset, RR, CRON, CROFF);
-
+    test_ack ta0(RR, CRON, CROFF, RA, CA);
 }
