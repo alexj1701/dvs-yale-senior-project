@@ -119,11 +119,11 @@ xpr0 Vpd Vcasc Vg__fb Vipr Vpr photoreceptor
 *
 xM0_N Vdd Vref out Vdd sky130_fd_pr__pfet_01v8  W=0.9 L=1.65 nrs=1 nrd=1 nf=1
 + AS=0.2025 PS=2.25 AD=0.27 PD=2.4
-xM1_N GND RA #4 GND sky130_fd_pr__nfet_01v8 W=0.45 L=0.15 nrs=1 nrd=1 nf=1
-+ AS=0.10125 PS=1.35 AD=0.10125 PD=1.35
+xM1_N GND RA #4 GND sky130_fd_pr__nfet_01v8 W=0.75 L=1.125 nrs=1 nrd=1 nf=1
++ AS=0.16875 PS=1.95 AD=0.16875 PD=1.95
 C_per_node_0 out GND 5e-15
-xM2_N #4 CA out GND sky130_fd_pr__nfet_01v8 W=0.45 L=0.15 nrs=1 nrd=1 nf=1
-+ AS=0.10125 PS=1.35 AD=0.135 PD=1.5
+xM2_N #4 CA out GND sky130_fd_pr__nfet_01v8 W=0.75 L=1.125 nrs=1 nrd=1 nf=1
++ AS=0.16875 PS=1.95 AD=0.225 PD=2.1
 cx3_0 Vdd out 3.2e-14
 .ends
 *---- end of process: reset<> -----
@@ -146,19 +146,19 @@ cx3_0 Vdd out 3.2e-14
 *
 * --- end node flags ---
 *
-xM0_N Vdd VnOFF a Vdd sky130_fd_pr__pfet_01v8  W=0.75 L=0.15 nrs=1 nrd=1 nf=1
+xM0_N Vdd VnOFF a Vdd sky130_fd_pr__pfet_01v8  W=0.75 L=1.125 nrs=1 nrd=1 nf=1
 + AS=0.16875 PS=1.95 AD=0.225 PD=2.1
-xM1_N GND a RR GND sky130_fd_pr__nfet_01v8 W=0.45 L=0.15 nrs=1 nrd=1 nf=1
-+ AS=0.135 PS=1.5 AD=0.135 PD=1.5
-xM2_N GND VIoffh a GND sky130_fd_pr__nfet_01v8 W=0.45 L=0.15 nrs=1 nrd=1 nf=1
-+ AS=0.135 PS=1.5 AD=0.135 PD=1.5
-xM3_N GND RA #7 GND sky130_fd_pr__nfet_01v8 W=0.45 L=0.15 nrs=1 nrd=1 nf=1
-+ AS=0.135 PS=1.5 AD=0.10125 PD=1.35
+xM1_N GND a RR GND sky130_fd_pr__nfet_01v8 W=0.75 L=1.125 nrs=1 nrd=1 nf=1
++ AS=0.225 PS=2.1 AD=0.225 PD=2.1
+xM2_N GND VIoffh a GND sky130_fd_pr__nfet_01v8 W=0.9 L=1.8 nrs=1 nrd=1 nf=1
++ AS=0.27 PS=2.4 AD=0.27 PD=2.4
+xM3_N GND RA #7 GND sky130_fd_pr__nfet_01v8 W=0.75 L=1.125 nrs=1 nrd=1 nf=1
++ AS=0.225 PS=2.1 AD=0.16875 PD=1.95
 C_per_node_0 a GND 5e-15
 C_per_node_1 RR GND 5e-15
 C_per_node_2 CROFF GND 5e-15
-xM4_N #7 a CROFF GND sky130_fd_pr__nfet_01v8 W=0.45 L=0.15 nrs=1 nrd=1 nf=1
-+ AS=0.10125 PS=1.35 AD=0.135 PD=1.5
+xM4_N #7 a CROFF GND sky130_fd_pr__nfet_01v8 W=0.75 L=1.125 nrs=1 nrd=1 nf=1
++ AS=0.16875 PS=1.95 AD=0.225 PD=2.1
 .ends
 *---- end of process: off_handler<> -----
 *
@@ -205,16 +205,77 @@ xonh0 VON RA RR CRON on_handler
 .ends
 *---- end of process: pixel_logic<> -----
 *
-*---- act defproc: pixel<> -----
-* raw ports:  Vpd Vcasc Vg_fb Vipr Vidiff VIon VIoff Vref VIoffh RA CA RR CRON CROFF
+*---- act defproc: test_ack<> -----
+* raw ports:  RR CRON CROFF RA CA
 *
-.subckt pixel Vpd Vcasc Vg__fb Vipr Vidiff VIon VIoff Vref VIoffh RA CA RR CRON CROFF
-*.PININFO Vpd:I Vcasc:I Vg__fb:I Vipr:I Vidiff:I VIon:I VIoff:I Vref:I VIoffh:I RA:I CA:I RR:O CRON:O CROFF:O
+.subckt test_ack RR CRON CROFF RA CA
+*.PININFO RR:I CRON:I CROFF:I RA:O CA:O
 *.POWER VDD Vdd
 *.POWER GND GND
 *.POWER NSUB GND
 *.POWER PSUB Vdd
-xpc0 Vpd Vcasc Vg__fb Vipr Vidiff VnRstChAmp VIon VIoff VON VnOFF pixel_core
-xpl0 Vref VIoffh VON VnOFF RA CA VnRstChAmp RR CRON CROFF pixel_logic
+*
+* --- node flags ---
+*
+* ra0 (combinational)
+* ra1 (combinational)
+* RA (combinational)
+* ca0 (combinational)
+* ca1 (combinational)
+* CA (combinational)
+*
+* --- end node flags ---
+*
+xM0_N Vdd RR ra0 Vdd sky130_fd_pr__pfet_01v8  W=0.75 L=0.15 nrs=1 nrd=1 nf=1
++ AS=0.225 PS=2.1 AD=0.225 PD=2.1
+xM1_N Vdd ra0 ra1 Vdd sky130_fd_pr__pfet_01v8  W=0.75 L=75 nrs=1 nrd=1 nf=1
++ AS=0.225 PS=2.1 AD=0.225 PD=2.1
+xM2_N Vdd ra1 RA Vdd sky130_fd_pr__pfet_01v8  W=0.75 L=0.15 nrs=1 nrd=1 nf=1
++ AS=0.225 PS=2.1 AD=0.225 PD=2.1
+xM3_N Vdd CRON ca0 Vdd sky130_fd_pr__pfet_01v8  W=0.75 L=0.15 nrs=1 nrd=1 nf=1
++ AS=0.225 PS=2.1 AD=0.225 PD=2.1
+xM4_N Vdd CROFF ca0 Vdd sky130_fd_pr__pfet_01v8  W=0.75 L=0.15 nrs=1 nrd=1 nf=1
++ AS=0.225 PS=2.1 AD=0.225 PD=2.1
+xM5_N Vdd ca0 ca1 Vdd sky130_fd_pr__pfet_01v8  W=0.75 L=75 nrs=1 nrd=1 nf=1
++ AS=0.225 PS=2.1 AD=0.225 PD=2.1
+xM6_N Vdd ca1 CA Vdd sky130_fd_pr__pfet_01v8  W=0.75 L=0.15 nrs=1 nrd=1 nf=1
++ AS=0.225 PS=2.1 AD=0.225 PD=2.1
+xM7_N GND RR ra0 GND sky130_fd_pr__nfet_01v8 W=0.45 L=0.15 nrs=1 nrd=1 nf=1
++ AS=0.135 PS=1.5 AD=0.135 PD=1.5
+xM8_N GND ra0 ra1 GND sky130_fd_pr__nfet_01v8 W=0.75 L=75 nrs=1 nrd=1 nf=1
++ AS=0.225 PS=2.1 AD=0.225 PD=2.1
+xM9_N GND ra1 RA GND sky130_fd_pr__nfet_01v8 W=0.45 L=0.15 nrs=1 nrd=1 nf=1
++ AS=0.135 PS=1.5 AD=0.135 PD=1.5
+xM10_N GND CRON #8 GND sky130_fd_pr__nfet_01v8 W=0.45 L=0.15 nrs=1 nrd=1 nf=1
++ AS=0.135 PS=1.5 AD=0.10125 PD=1.35
+xM11_N GND ca0 ca1 GND sky130_fd_pr__nfet_01v8 W=0.75 L=75 nrs=1 nrd=1 nf=1
++ AS=0.225 PS=2.1 AD=0.225 PD=2.1
+xM12_N GND ca1 CA GND sky130_fd_pr__nfet_01v8 W=0.45 L=0.15 nrs=1 nrd=1 nf=1
++ AS=0.135 PS=1.5 AD=0.135 PD=1.5
+C_per_node_0 ra0 GND 5e-15
+C_per_node_1 ra1 GND 5e-15
+C_per_node_2 RA GND 5e-15
+C_per_node_3 ca0 GND 5e-15
+xM13_N #8 CROFF ca0 GND sky130_fd_pr__nfet_01v8 W=0.45 L=0.15 nrs=1 nrd=1 nf=1
++ AS=0.10125 PS=1.35 AD=0.135 PD=1.5
+C_per_node_4 ca1 GND 5e-15
+C_per_node_5 CA GND 5e-15
+cx14_0 ra1 GND 1e-11
+cx15_1 ca1 GND 1e-11
+.ends
+*---- end of process: test_ack<> -----
+*
+*---- act defproc: pixel<> -----
+* raw ports:  Vpd Vcasc Vg_fb Vipr Vidiff Vreset VIon VIoff Vref VIoffh RA CA RR CRON CROFF
+*
+.subckt pixel Vpd Vcasc Vg__fb Vipr Vidiff Vreset VIon VIoff Vref VIoffh RA CA RR CRON CROFF
+*.PININFO Vpd:I Vcasc:I Vg__fb:I Vipr:I Vidiff:I Vreset:O VIon:I VIoff:I Vref:I VIoffh:I RA:O CA:O RR:O CRON:O CROFF:O
+*.POWER VDD Vdd
+*.POWER GND GND
+*.POWER NSUB GND
+*.POWER PSUB Vdd
+xpc0 Vpd Vcasc Vg__fb Vipr Vidiff Vreset VIon VIoff VON VnOFF pixel_core
+xpl0 Vref VIoffh VON VnOFF RA CA Vreset RR CRON CROFF pixel_logic
+xta0 RR CRON CROFF RA CA test_ack
 .ends
 *---- end of process: pixel<> -----
