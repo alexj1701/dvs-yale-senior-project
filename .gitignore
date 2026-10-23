@@ -21,3 +21,4 @@ dali*.log
 dali_out*
 tcl/
 .act_history
+gdsfactory_stub/__pycache__/gdsfactory.cpython-314.pyc
