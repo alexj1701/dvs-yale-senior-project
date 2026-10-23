@@ -1,0 +1,15 @@
+magic
+tech sky130l
+timestamp 1792713519
+<< nwell >>
+rect 0 0 253 253
+<< nsc >>
+rect 156 230 178 242
+<< m1 >>
+rect 154 242 181 278
+rect 154 230 156 242
+rect 178 230 181 242
+rect 154 229 181 230
+<< labels >>
+rlabel m1 164 276 164 276 1 Vpd
+<< end >>
