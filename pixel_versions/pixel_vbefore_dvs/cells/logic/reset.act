@@ -1,0 +1,21 @@
+import globals; 
+
+// Reset Generator
+// in[3] -> [Vref, RA, CA]
+// RA = Row Acknowledge
+// CA = Column Acknowledge
+// out -> VnRstChAmp / Vreset
+// In Lichtsteiner they have rGND instead of GND, a programmable (Section II-C) low overhead switch drive
+
+defproc reset (bool? Vref, RA, CA; bool! out) {
+    
+    prs { 
+
+        [keeper=0] ~Vref<12,22> -> out+
+
+        [keeper=0] RA<10,15> & CA<10,15> -> out-
+
+        cap<32> (Vdd, out)
+
+    }
+}

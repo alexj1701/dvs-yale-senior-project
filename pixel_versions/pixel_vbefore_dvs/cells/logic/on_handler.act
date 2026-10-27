@@ -1,0 +1,15 @@
+import globals; 
+
+// Handler for ON events
+// RA = Row Acknowledge
+// out -> Row Request (RR), Column Request ON (CRON)
+
+defproc on_handler (bool? VON, RA; bool! RR, CRON) {
+    
+    prs { 
+
+        [keeper=0] VON -> RR-
+
+        [keeper=0] RA & VON -> CRON-
+    }
+}

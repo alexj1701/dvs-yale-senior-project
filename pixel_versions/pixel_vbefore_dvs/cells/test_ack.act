@@ -1,0 +1,23 @@
+// A simulated acknowledgement circuit
+defproc test_ack (bool? RR, CRON, CROFF; bool! RA, CA) {
+
+    bool ra0, ra1, ca0, ca1;
+    pint n = 10000;
+
+    prs {
+
+        // RA = ~RR, delayed
+        RR => ra0-
+        ra0<10,1000> => ra1-
+        cap<n> (ra1, GND)
+        ra1 => RA-
+
+        // CA = ~CRON | ~CROFF, delayed
+        CRON & CROFF => ca0-
+        ca0<10,1000> => ca1-
+        cap<n> (ca1, GND)
+        ca1 => CA-
+
+    }
+
+}

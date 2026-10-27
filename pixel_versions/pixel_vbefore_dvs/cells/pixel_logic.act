@@ -1,0 +1,16 @@
+import globals;
+import std::cells;
+open std::cells;
+import "cells/logic/reset.act";
+import "cells/logic/on_handler.act";
+import "cells/logic/off_handler.act";
+
+defproc pixel_logic (bool? Vref, VIoffh, VON, VnOFF, RA, CA;
+               bool! Vreset, RR, CRON, CROFF) {
+    
+    // Instantiate cells
+    on_handler onh0(VON, RA, RR, CRON);
+    off_handler offh0(VIoffh, VnOFF, RA, RR, CROFF);
+    reset r0(Vref, RA, CA, Vreset);
+
+}
