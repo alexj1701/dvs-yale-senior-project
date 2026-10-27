@@ -1,0 +1,9 @@
+magic
+tech sky130A
+magscale 1 2
+timestamp 1792775114
+use sky130_fd_pr__cap_mim_m3_2_ASUYC8  sky130_fd_pr__cap_mim_m3_2_ASUYC8_0
+timestamp 1792775114
+transform 1 0 1316 0 1 1057
+box -1330 -1062 1352 1062
+<< end >>

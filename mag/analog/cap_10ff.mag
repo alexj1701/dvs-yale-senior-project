@@ -1,0 +1,13 @@
+magic
+tech sky130A
+magscale 1 2
+timestamp 1793123003
+<< error_p >>
+rect 75 438 457 462
+rect 75 104 99 438
+rect 75 80 457 104
+use sky130_fd_pr__cap_mim_m3_2_G9P4RV  sky130_fd_pr__cap_mim_m3_2_G9P4RV_0
+timestamp 1793123003
+transform 1 0 535 0 1 271
+box -556 -288 578 288
+<< end >>
