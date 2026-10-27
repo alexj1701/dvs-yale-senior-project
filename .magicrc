@@ -66,4 +66,7 @@ addpath ${PDK_ROOT}/sky130A/libs.ref/sky130_osu_sc_t18/${MAGTYPE}
 addpath ${PDK_ROOT}/sky130A/libs.ref/sky130_ml_xx_hd/${MAGTYPE}
 addpath ${PDK_ROOT}/sky130A/libs.ref/sky130_fd_bd_sram/${MAGTYPE}
 addpath ${PDK_ROOT}/sky130A/libs.ref/sky130_sram_macros/${MAGTYPE}
+addpath ./mag
+addpath ./mag/cells
+addpath ./mag/analog
 
