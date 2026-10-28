@@ -1,4 +1,54 @@
 *
+*---- act defproc: pr_stack<4,11,9> -----
+* raw ports:  top
+*
+.subckt pr__stack_34_711_79_4 top
+*.PININFO top:I
+*.POWER VDD Vdd
+*.POWER GND GND
+*.POWER NSUB GND
+*.POWER PSUB Vdd
+xM0_Npass x_51_6 top top GND sky130_fd_pr__nfet_01v8 W=0.825 L=0.675 nrs=1 nrd=1 nf=1
++ AS=0.2475 PS=2.25 AD=0.2475 PD=2.25
+xM1_Npass x_52_6 x_51_6 x_51_6 GND sky130_fd_pr__nfet_01v8 W=0.825 L=0.675 nrs=1 nrd=1 nf=1
++ AS=0.2475 PS=2.25 AD=0.2475 PD=2.25
+xM2_Npass x_53_6 x_52_6 x_52_6 GND sky130_fd_pr__nfet_01v8 W=0.825 L=0.675 nrs=1 nrd=1 nf=1
++ AS=0.2475 PS=2.25 AD=0.2475 PD=2.25
+xM3_Npass GND x_53_6 x_53_6 GND sky130_fd_pr__nfet_01v8 W=0.825 L=0.675 nrs=1 nrd=1 nf=1
++ AS=0.2475 PS=2.25 AD=0.2475 PD=2.25
+.ends
+*---- end of process: pr_stack<4,11,9> -----
+*
+*---- act defproc: preamp<> -----
+* raw ports:  in[0] in[1] in[2] out
+*
+.subckt preamp in_50_6 in_51_6 in_52_6 out
+*.PININFO in_50_6:I in_51_6:I in_52_6:I out:O
+*.POWER VDD Vdd
+*.POWER GND GND
+*.POWER NSUB GND
+*.POWER PSUB Vdd
+*
+* --- node flags ---
+*
+* out (combinational)
+*
+* --- end node flags ---
+*
+xM0_Npass in_50_6 Vmirr0 Vmirr0 Vdd sky130_fd_pr__pfet_01v8  W=3 L=3.6 nrs=1 nrd=1 nf=1
++ AS=0.9 PS=6.6 AD=0.9 PD=6.6
+xM1_Npass GND in_51_6 Vmirr0 GND sky130_fd_pr__nfet_01v8 W=3 L=3.6 nrs=1 nrd=1 nf=1
++ AS=0.9 PS=6.6 AD=0.9 PD=6.6
+xM2_Npass Vmirr1 in_52_6 Vmirr0 Vdd sky130_fd_pr__pfet_01v8  W=0.75 L=0.15 nrs=1 nrd=1 nf=1
++ AS=0.225 PS=2.1 AD=0.225 PD=2.1
+xM3_Npass in_50_6 Vmirr1 out Vdd sky130_fd_pr__pfet_01v8  W=3 L=3.6 nrs=1 nrd=1 nf=1
++ AS=0.9 PS=6.6 AD=0.9 PD=6.6
+xM4_Npass Vdd Vmirr1 Vdd Vdd sky130_fd_pr__pfet_01v8  W=27 L=9 nrs=1 nrd=1 nf=1
++ AS=8.1 PS=54.6 AD=8.1 PD=54.6
+xprstack0 out pr__stack_34_711_79_4
+.ends
+*---- end of process: preamp<> -----
+*
 *---- act defproc: champ<> -----
 * raw ports:  in[0] in[1] in[2] out
 *
@@ -26,6 +76,33 @@ cx3_0 in_50_6 a 2e-13
 cx4_1 a out 7e-15
 .ends
 *---- end of process: champ<> -----
+*
+*---- act defproc: aps<> -----
+* raw ports:  in[0] in[1] in[2] in[3] out
+*
+.subckt aps in_50_6 in_51_6 in_52_6 in_53_6 out
+*.PININFO in_50_6:I in_51_6:I in_52_6:I in_53_6:I out:O
+*.POWER VDD Vdd
+*.POWER GND GND
+*.POWER NSUB GND
+*.POWER PSUB Vdd
+*
+* --- node flags ---
+*
+* out (combinational)
+*
+* --- end node flags ---
+*
+xM0_Npass Vdd in_51_6 in_50_6 GND sky130_fd_pr__nfet_01v8 W=1.275 L=1.05 nrs=1 nrd=1 nf=1
++ AS=0.3825 PS=3.15 AD=0.3825 PD=3.15
+xM1_Npass in_50_6 in_52_6 a GND sky130_fd_pr__nfet_01v8 W=1.275 L=1.2 nrs=1 nrd=1 nf=1
++ AS=0.3825 PS=3.15 AD=0.3825 PD=3.15
+xM2_Npass Vdd a b GND sky130_fd_pr__nfet_01v8 W=1.8 L=1.05 nrs=1 nrd=1 nf=1
++ AS=0.54 PS=4.2 AD=0.54 PD=4.2
+xM3_Npass b in_53_6 out GND sky130_fd_pr__nfet_01v8 W=2.1 L=1.05 nrs=1 nrd=1 nf=1
++ AS=0.63 PS=4.8 AD=0.63 PD=4.8
+.ends
+*---- end of process: aps<> -----
 *
 *---- act defproc: comparators<> -----
 * raw ports:  in[0] in[1] in[2] out[0] out[1]
@@ -57,6 +134,30 @@ C_per_node_1 out_51_6 GND 5e-15
 .ends
 *---- end of process: comparators<> -----
 *
+*---- act defproc: binning<> -----
+* raw ports:  in[0] in[1] in[2] out[0] out[1]
+*
+.subckt binning in_50_6 in_51_6 in_52_6 out_50_6 out_51_6
+*.PININFO in_50_6:I in_51_6:I in_52_6:I out_50_6:O out_51_6:O
+*.POWER VDD Vdd
+*.POWER GND GND
+*.POWER NSUB GND
+*.POWER PSUB Vdd
+*
+* --- node flags ---
+*
+* out_50_6 (combinational)
+* out_51_6 (combinational)
+*
+* --- end node flags ---
+*
+xM0_Npass out_50_6 in_52_6 in_50_6 Vdd sky130_fd_pr__pfet_01v8  W=0.75 L=0.15 nrs=1 nrd=1 nf=1
++ AS=0.225 PS=2.1 AD=0.225 PD=2.1
+xM1_Npass out_51_6 in_52_6 in_51_6 Vdd sky130_fd_pr__pfet_01v8  W=0.75 L=0.15 nrs=1 nrd=1 nf=1
++ AS=0.225 PS=2.1 AD=0.225 PD=2.1
+.ends
+*---- end of process: binning<> -----
+*
 *---- act defproc: photoreceptor<> -----
 * raw ports:  in[0] in[1] in[2] in[3] out
 *
@@ -86,18 +187,51 @@ cx4_0 in_50_6 GND 5e-14
 .ends
 *---- end of process: photoreceptor<> -----
 *
-*---- act defproc: pixel_core<> -----
-* raw ports:  Vpd Vcasc Vg_fb Vipr Vidiff VnRstChAmp VIon VIoff VON VnOFF
+*---- act defproc: ota_buff<> -----
+* raw ports:  in[0] in[1] out
 *
-.subckt pixel_core Vpd Vcasc Vg__fb Vipr Vidiff VnRstChAmp VIon VIoff VON VnOFF
-*.PININFO Vpd:I Vcasc:I Vg__fb:I Vipr:I Vidiff:I VnRstChAmp:I VIon:I VIoff:I VON:O VnOFF:O
+.subckt ota_buff in_50_6 in_51_6 out
+*.PININFO in_50_6:I in_51_6:I out:O
 *.POWER VDD Vdd
 *.POWER GND GND
 *.POWER NSUB GND
 *.POWER PSUB Vdd
+*
+* --- node flags ---
+*
+* out (combinational)
+*
+* --- end node flags ---
+*
+xM0_Npass Vdd in_51_6 a Vdd sky130_fd_pr__pfet_01v8  W=3.6 L=15 nrs=1 nrd=1 nf=1
++ AS=1.08 PS=7.8 AD=1.08 PD=7.8
+xM1_Npass a in_50_6 b__l Vdd sky130_fd_pr__pfet_01v8  W=3.6 L=15 nrs=1 nrd=1 nf=1
++ AS=1.08 PS=7.8 AD=1.08 PD=7.8
+xM2_Npass a out out Vdd sky130_fd_pr__pfet_01v8  W=3.6 L=15 nrs=1 nrd=1 nf=1
++ AS=1.08 PS=7.8 AD=1.08 PD=7.8
+xM3_Npass GND b__l b__l GND sky130_fd_pr__nfet_01v8 W=3.6 L=15 nrs=1 nrd=1 nf=1
++ AS=1.08 PS=7.8 AD=1.08 PD=7.8
+xM4_Npass GND b__l out GND sky130_fd_pr__nfet_01v8 W=3.6 L=15 nrs=1 nrd=1 nf=1
++ AS=1.08 PS=7.8 AD=1.08 PD=7.8
+.ends
+*---- end of process: ota_buff<> -----
+*
+*---- act defproc: pixel_core<> -----
+* raw ports:  CRes TX CSel Vpd Vcasc Vg_fb Vipr VnEnableBinning VIprMirr VnRstMirrAmp VIprBuff Vidiff VnRstChAmp VIon VIoff apsOut Vpd_bin Vpr_bin VON VnOFF
+*
+.subckt pixel_core CRes TX CSel Vpd Vcasc Vg__fb Vipr VnEnableBinning VIprMirr VnRstMirrAmp VIprBuff Vidiff VnRstChAmp VIon VIoff apsOut Vpd__bin Vpr__bin VON VnOFF
+*.PININFO CRes:I TX:I CSel:I Vpd:I Vcasc:I Vg__fb:I Vipr:I VnEnableBinning:I VIprMirr:I VnRstMirrAmp:I VIprBuff:I Vidiff:I VnRstChAmp:I VIon:I VIoff:I apsOut:O Vpd__bin:O Vpr__bin:O VON:O VnOFF:O
+*.POWER VDD Vdd
+*.POWER GND GND
+*.POWER NSUB GND
+*.POWER PSUB Vdd
+xpa0 Vpr VIprMirr VnRstMirrAmp VprAmp preamp
 xca0 Vpr Vidiff VnRstChAmp Vdiff champ
+xap0 Vpd CRes TX CSel apsOut aps
 xch0 Vdiff VIon VIoff VON VnOFF comparators
+xbi0 Vpd Vpr VnEnableBinning Vpd__bin Vpr__bin binning
 xpr0 Vpd Vcasc Vg__fb Vipr Vpr photoreceptor
+xob0 VprAmp VIprBuff VprBuff ota_buff
 .ends
 *---- end of process: pixel_core<> -----
 *
@@ -274,7 +408,7 @@ cx15_1 ca1 GND 1e-11
 *.POWER GND GND
 *.POWER NSUB GND
 *.POWER PSUB Vdd
-xpc0 Vpd Vcasc Vg__fb Vipr Vidiff Vreset VIon VIoff VON VnOFF pixel_core
+xpc0 Vpd Vcasc Vg__fb Vipr Vidiff Vreset VIon VIoff VON VnOFF pc0_aVIprBuff pc0_aVidiff pc0_aVnRstChAmp pc0_aVIon pc0_aVIoff pc0_aapsOut pc0_aVpd__bin pc0_aVpr__bin pc0_aVON pc0_aVnOFF pixel_core
 xpl0 Vref VIoffh VON VnOFF RA CA Vreset RR CRON CROFF pixel_logic
 xta0 RR CRON CROFF RA CA test_ack
 .ends

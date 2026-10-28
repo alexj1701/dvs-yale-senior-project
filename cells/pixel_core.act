@@ -1,19 +1,28 @@
 import globals;
 import std::cells;
 open std::cells;
+import "cells/core/aps.act";
 import "cells/core/photoreceptor.act";
+import "cells/core/binning.act";
+import "cells/core/preamp.act";
+import "cells/core/ota_buff.act";
 import "cells/core/champ.act";
 import "cells/core/comparators.act";
 
-defproc pixel_core (bool? Vpd, Vcasc, Vg_fb, Vipr, Vidiff, VnRstChAmp, VIon, VIoff;
-               bool! VON, VnOFF) {
+defproc pixel_core (bool? CRes, TX, CSel, Vpd, Vcasc, Vg_fb, Vipr, VnEnableBinning, VIprMirr, 
+                          VnRstMirrAmp, VIprBuff, Vidiff, VnRstChAmp, VIon, VIoff;
+                    bool! apsOut, Vpd_bin, Vpr_bin, VON, VnOFF) {
 
     // Declare internal signals
-    bool  Vpr, Vdiff;
-    
+    bool  Vpr, VprAmp, VprBuff, Vdiff;
+
     // Instantiate cells
+    aps ap0({Vpd, CRes, TX, CSel}, apsOut);
     photoreceptor pr0({Vpd, Vcasc, Vg_fb, Vipr}, Vpr);
+    binning bi0({Vpd, Vpr, VnEnableBinning}, {Vpd_bin, Vpr_bin});
+    preamp pa0({Vpr, VIprMirr, VnRstMirrAmp}, VprAmp);
+    ota_buff ob0({VprAmp, VIprBuff}, VprBuff);
     champ ca0({Vpr, Vidiff, VnRstChAmp}, Vdiff);
-    comparators ch0({Vdiff, VIon, VIoff}, {VON, VnOFF});    
+    comparators ch0({Vdiff, VIon, VIoff}, {VON, VnOFF});
 
 }
