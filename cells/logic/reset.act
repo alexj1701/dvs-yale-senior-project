@@ -1,21 +1,31 @@
 import globals; 
 
 // Reset Generator
-// in[3] -> [Vref, RA, CA]
+// in[4] -> [forceReset, Vref, RA, CA]
 // RA = Row Acknowledge
 // CA = Column Acknowledge
 // out -> VnRstChAmp / Vreset
 // In Lichtsteiner they have rGND instead of GND, a programmable (Section II-C) low overhead switch drive
 
-defproc reset (bool? Vref, RA, CA; bool! out) {
+defproc reset (bool? forceReset, Vref, RA, CA; bool! VnRstMirrAmp, VnRstChAmp) {
     
     prs { 
 
-        [keeper=0] ~Vref<12,22> -> out+
+        // Reset the mirror amplifier
+        // Fast pullup
+        //[keeper=0] ~Vref<12,22> -> VnRstMirrAmp+
 
-        [keeper=0] RA<10,15> & CA<10,15> -> out-
+        [keeper=0] (RA<10,15> & CA<10,15>) | forceReset<10,15> => VnRstMirrAmp-
 
-        cap<32> (Vdd, out)
+
+
+        // Reset the change amplifier
+        // Slow pullup
+        [keeper=0] ~Vref<12,22> -> VnRstChAmp+
+
+        [keeper=0] (RA<10,15> & CA<10,15>) | forceReset<10,15> -> VnRstChAmp-
+
+        cap<32> (Vdd, VnRstChAmp)
 
     }
 }
