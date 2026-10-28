@@ -1,0 +1,16 @@
+import globals;
+
+// Pixel Binning
+// TODO: EnableBinning also requires forceReset for 3 out of 4 of the pixels
+// in[3] -> [Vpd, Vpr, VnEnableBinning]
+// out -> [Vpd_bin, Vpr_bin]
+defproc binning (bool? in[3]; bool! out[2]) {
+
+    prs { 
+
+        // Switched to PMOS as Vpr will be ~1.8v max which would prohibit NMOS from functioning properly
+        passp (in[2], out[0], in[0])
+        passp (in[2], out[1], in[1])
+
+    }
+}

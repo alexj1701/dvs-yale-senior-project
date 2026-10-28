@@ -1,0 +1,54 @@
+import globals;
+
+// Pre-amplifier stack
+// A stack of N diode-connected transistors.
+// in -> VprAmp
+// out -> VprAmp
+template<pint N, w, l>
+defcell pr_stack (bool top) {
+
+    bool x[N+1];
+
+    prs { 
+        // N NMOS diode-connected transistors, gate source drain
+        (i:N: [keeper=0] passn<w,l> (x[i], x[i+1], x[i]))
+    }
+
+    x[0] = top;
+    x[N] = GND;
+    
+
+}
+
+// Pre-amplifier
+// in[3] -> [Vpr, VIprMirr, VnRstMirrAmp]
+// out -> Vpr
+defproc preamp (bool? in[3]; bool! out) {
+    
+    
+    pint w0 = 40, l0 = 48;
+    pint w1 = 360, l1 = 120;
+    pint w2 = 11, l2 = 9;
+
+    bool Vmirr0, Vmirr1;
+    
+    prs { 
+
+        // Diode connected transistor
+        passp <w0,l0> (Vmirr0, in[0], Vmirr0)
+
+        // IprMirr transistor
+        passn <w0,l0> (in[1], GND, Vmirr0)
+
+        // nRsrtMirrAmp transistor
+        passp (in[2], Vmirr1, Vmirr0)
+
+        // Mmirr
+        passp <w0,l0> (Vmirr1, in[0], out)
+
+        //Mcap
+        passp <w1,l1> (Vmirr1, Vdd, Vdd)
+    }
+
+    pr_stack<4,w2,l2> prstack0(out);
+}
