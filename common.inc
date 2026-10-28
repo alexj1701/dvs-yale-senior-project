@@ -13,4 +13,4 @@ vpwr1 gnd 0 dc 0.0v
 
 .inc /usr/local/cad/conf/sky130l/models.sp
 .inc pixel.spice
-inc photodiode.sp
+*.inc photodiode.sp
