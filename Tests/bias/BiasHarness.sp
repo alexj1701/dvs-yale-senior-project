@@ -79,6 +79,9 @@ Vtri tri 0 PWL 0 0 2m 0 101m 6 200m 0
 *10 fA, 1 pA, 100 pA, 10 nA
 *.step Ldec LIST 0 2 4 6
 
+
+xpd Vdd GND Vpd photodiode
+
 Bph  Vpd GND I={Idark*exp(V(tri)*2.302585)}
 
 * Column order matters: bias_plot.gp reads these by column number.
