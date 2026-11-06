@@ -1,23 +1,44 @@
 // A simulated acknowledgement circuit
+//
+// Both RA and CA rise as fast as possible (wide pull-ups) and are held high for a set time after an event, then drop sharply.
+// The slow RC decay is kept on an internal node (ra_i / ca_i) and each output is driven through two ordinary inverters, so
+// RA and CA stay at full level until the internal node falls through the inverter threshold (about Vdd/2) and then fall
+// in nanoseconds instead of tailing off over a millisecond.
+//   RA: ra_i = ~RR            : strong pull-up when RR is low, a series stack of weak nFETs into Cra when RR is high
+//   CA: ca_i = ~(CRON & CROFF): strong pull-ups when either is low, a series stack of weak nFETs into Cca when both are high
+//
+// The capacitors are kept small on purpose. The RR / CRON low pulses that charge them last only a few microseconds, so a
+// large capacitor never charges to full level (its starting voltage is about Q/C), and then a bigger capacitor does not
+// lengthen the hold. With a small C the node charges fully and the hold is set by the discharge resistance instead:
+//   hold ~ 0.69 * R_discharge * C      (from Vdd down to the inverter threshold, about Vdd/2)
+// One weak nFET (<10,L>, W = 0.75 um, L = 75 um) measured about 0.8 MOhm, so the stacks below give roughly
+//   RA: 5 in series  ~ 4.0 MOhm -> ~0.28 ms with 100 pF
+//   CA: 8 in series (4 CRON/CROFF pairs) ~ 4.2 MOhm -> ~0.29 ms with 100 pF   (RA drops first, then CA)
+// These are estimates: to change a hold time, add or remove devices in the stack (each is the same input repeated) or
+// scale the capacitor (keep it well below ~200 pF so it still charges fully).
 defproc test_ack (bool? RR, CRON, CROFF; bool! RA, CA) {
 
-    bool ra0, ra1, ca0, ca1;
-    pint n = 10000;
+    bool ra_i, rb, ca_i, cb;
+    pint L    = 1000;      // channel length of the weak pull-down transistors (1000 = 75 um)
+    pint Wup  = 1000;      // width of the wide pull-up transistors (1000 = 75 um, minimum length)
+    pint Cra  = 100000;    // capacitor on ra_i (units of fF: 100000 = 100 pF)
+    pint Cca  = 100000;    // capacitor on ca_i (100 pF)
 
     prs {
+        // RA = ~RR, held high for a while after RR is released, then a sharp edge through two inverters
+        [keeper=0] ~RR<Wup,2> -> ra_i+
+        [keeper=0] RR<10,L> & RR<10,L> & RR<10,L> & RR<10,L> & RR<10,L> -> ra_i-
+        cap<Cra> (ra_i, GND)
+        ra_i => rb-
+        rb => RA-
 
-        // RA = ~RR, delayed
-        RR => ra0-
-        ra0<10,1000> => ra1-
-        cap<n> (ra1, GND)
-        ra1 => RA-
-
-        // CA = ~CRON | ~CROFF, delayed
-        CRON & CROFF => ca0-
-        ca0<10,1000> => ca1-
-        cap<n> (ca1, GND)
-        ca1 => CA-
-
+        // CA = ~(CRON & CROFF), same idea (4 CRON/CROFF pairs in series = 8 weak nFETs)
+        [keeper=0] ~CRON<Wup,2> -> ca_i+
+        [keeper=0] ~CROFF<Wup,2> -> ca_i+
+        [keeper=0] CRON<10,L> & CROFF<10,L> & CRON<10,L> & CROFF<10,L> & CRON<10,L> & CROFF<10,L> & CRON<10,L> & CROFF<10,L> -> ca_i-
+        cap<Cca> (ca_i, GND)
+        ca_i => cb-
+        cb => CA-
     }
 
 }
