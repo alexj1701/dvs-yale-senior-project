@@ -21,18 +21,23 @@ defcell pr_stack (bool top) {
 }
 
 // Pre-amplifier
-// in[3] -> [Vpr, VIprMirr, VnRstMirrAmp]
+// in[4]] -> [Vpr, VIprMirr, rstMirrAmp, byp]
 // out -> Vpr
-defproc preamp (bool? in[3]; bool! out) {
+defproc preamp (bool? in[4]; bool! out) {
     
     
     pint w0 = 40, l0 = 48;
-    pint w1 = 360, l1 = 120;
-    pint w2 = 11, l2 = 9;
+    pint w1 = 120, l1 = 40;
+    pint w2 = 22, l2 = 9;
 
-    bool Vmirr0, Vmirr1;
+    bool Vmirr0, Vmirr1, a, nbyp;
     
     prs { 
+
+        // Bypass
+        in[3] => nbyp-  // inverter
+        passp (nbyp, out, in[0]) // bypass the premap (byp high)
+        passp (in[3], out, a) // use the preamp (byp low)
 
         // Diode connected transistor
         passp <w0,l0> (Vmirr0, in[0], Vmirr0)
@@ -41,14 +46,14 @@ defproc preamp (bool? in[3]; bool! out) {
         passn <w0,l0> (in[1], GND, Vmirr0)
 
         // nRsrtMirrAmp transistor
-        passp (in[2], Vmirr1, Vmirr0)
+        passn (in[2], Vmirr0, Vmirr1)
 
         // Mmirr
-        passp <w0,l0> (Vmirr1, in[0], out)
+        passp <w0,l0> (Vmirr1, in[0], a)
 
         //Mcap
         passp <w1,l1> (Vmirr1, Vdd, Vdd)
     }
 
-    pr_stack<4,w2,l2> prstack0(out);
+    pr_stack<3,w2,l2> prstack0(a);
 }
