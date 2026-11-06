@@ -2,15 +2,23 @@ import globals;
 
 // Pixel Binning
 // TODO: EnableBinning also requires forceReset for 3 out of 4 of the pixels
-// in[3] -> [Vpd, Vpr, VnEnableBinning]
+// in[3] -> [Vpd, Vpr, enableBinning]
 // out -> [Vpd_bin, Vpr_bin]
 defproc binning (bool? in[3]; bool! out[2]) {
 
+    bool a;
+
     prs { 
 
+        [keeper=0] passn (in[2], out[0], in[0])
+
+        // Simple inverter
+        // enableBinning -> inverted internal node a
+        in[2] -> a-
+        ~in[2] -> a+
+
         // Switched to PMOS as Vpr will be ~1.8v max which would prohibit NMOS from functioning properly
-        passp (in[2], out[0], in[0])
-        passp (in[2], out[1], in[1])
+        [keeper=0] passp (a, out[1], in[1])
 
     }
 }
