@@ -5,13 +5,16 @@ import "cells/pixel_core.act";
 import "cells/pixel_logic.act";
 import "cells/test_ack.act";
 
-defproc pixel (bool? Vpd, Vcasc, Vg_fb, Vipr, Vidiff, Vreset, VIon, VIoff, Vref, VIoffh, RA, CA;
-               bool! RR, CRON, CROFF) {
+defproc pixel (bool? Vpd, Vcasc, Vg_fb, Vipr, Vidiff, reset, VIon, VIoff, Vref, VIoffh, RA, CA, rGND,
+               CRes, TX, CSel, enableBinning, VIprMirr, VIprBuff, byp;
+               bool! RR, CRON, CROFF, apsOut) {
 
     // Internal signals
-    bool VON, VnOFF;
+    bool VON, VnOFF, Vpd_bin, Vpr_bin, rstMirrAmp, nRstChAmp;
 
-    pixel_core pc0(Vpd, Vcasc, Vg_fb, Vipr, Vidiff, Vreset, VIon, VIoff, VON, VnOFF);
-    pixel_logic pl0(Vref, VIoffh, VON, VnOFF, RA, CA, Vreset, RR, CRON, CROFF);
+    // reset drives both the champ reset (nRstChAmp) and the preamp mirror reset (rstMirrAmp)
+    pixel_core pc0(CRes, TX, CSel, Vpd, Vcasc, Vg_fb, Vipr, enableBinning, VIprMirr, rstMirrAmp, byp, VIprBuff,
+                   Vidiff, nRstChAmp, VIon, VIoff, apsOut, Vpd_bin, Vpr_bin, VON, VnOFF);
+    pixel_logic pl0(reset, Vref, VIoffh, VON, VnOFF, RA, CA, rGND, rstMirrAmp, nRstChAmp, RR, CRON, CROFF);
     test_ack ta0(RR, CRON, CROFF, RA, CA);
 }
