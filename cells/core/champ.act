@@ -16,7 +16,7 @@ defproc champ (bool? in[3]; bool! out) {
         cap<200> (in[0], a)
 
         //7fF cap
-        cap<7> (a, out)
+        cap<10> (a, out)
 
         // G = nRstChAmp, S = a, D = out
         // Unknown size
