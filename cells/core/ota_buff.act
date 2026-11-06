@@ -9,25 +9,45 @@ defproc ota_buff (bool? in[2]; bool! out) {
     
     pint w0 = 48, l0 = 200;
 
+    // a = tail node, b_l/r is the intersection between the mirror load and diff pair
     bool a, b_l, b_r;
 
     prs { 
 
-        // Biasing current source
-        passp <w0,l0> (in[1], Vdd, a)
-
-        // PMOS differential pair
-        // pos / left
-        passp <w0,l0> (in[0], a, b_l)
-        // neg / right
-        passp <w0,l0> (b_r, a, b_r)
-
-        // NMOS mirror load
+        // PMOS mirror load
         // left
-        passn <w0,l0> (b_l, GND, b_l)
+        passp <w0,l0> (b_l, b_l, Vdd)
         // right
-        passn <w0,l0> (b_l, GND, b_r)
+        passp <w0,l0> (b_l, b_r, Vdd)
+
+        // NMOS differential pair
+        // pos / left
+        passn <w0,l0> (in[0], b_l, a)
+        // neg / right
+        passn <w0,l0> (b_r, b_r, a)
+
+        // Biasing current source
+        passn <w0,l0> (in[1], GND, a)
     }
+
+    // PMOS Pair Version
+    // prs { 
+
+    //     // Biasing current source
+    //     passp <w0,l0> (in[1], Vdd, a)
+
+    //     // PMOS differential pair
+    //     // pos / left
+    //     passp <w0,l0> (in[0], a, b_l)
+    //     // neg / right
+    //     passp <w0,l0> (b_r, a, b_r)
+
+    //     // NMOS mirror load
+    //     // left
+    //     passn <w0,l0> (b_l, GND, b_l)
+    //     // right
+    //     passn <w0,l0> (b_l, GND, b_r)
+    // }
 
     out = b_r;
 
