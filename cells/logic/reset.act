@@ -4,28 +4,28 @@ import globals;
 // in[4] -> [forceReset, Vref, RA, CA]
 // RA = Row Acknowledge
 // CA = Column Acknowledge
-// out -> VnRstChAmp / Vreset
+// out -> nRstChAmp / reset
 // In Lichtsteiner they have rGND instead of GND, a programmable (Section II-C) low overhead switch drive
 
-defproc reset (bool? forceReset, Vref, RA, CA; bool! VnRstMirrAmp, VnRstChAmp) {
+defproc reset (bool? forceReset, Vref, RA, CA, rGND; bool! rstMirrAmp, nRstChAmp) {
     
+    bool a, b;
+
     prs { 
 
         // Reset the mirror amplifier
         // Fast pullup
-        //[keeper=0] ~Vref<12,22> -> VnRstMirrAmp+
-
-        [keeper=0] (RA<10,15> & CA<10,15>) | forceReset<10,15> => VnRstMirrAmp-
-
-
+        [keeper=0] (RA<10,15> & CA<10,15>) | forceReset<10,15> => a-
+        [keeper=0] ~a => rstMirrAmp+
 
         // Reset the change amplifier
-        // Slow pullup
-        [keeper=0] ~Vref<12,22> -> VnRstChAmp+
+        [keeper=0] ~Vref<12,22> -> nRstChAmp+  // Slow pullup
 
-        [keeper=0] (RA<10,15> & CA<10,15>) | forceReset<10,15> -> VnRstChAmp-
-
-        cap<32> (Vdd, VnRstChAmp)
+        // reset pull down to rGND
+        [keeper=0] passn<10,15>(RA, nRstChAmp, b)  // RA and CA in series
+        [keeper=0] passn<10,15>(CA, b, rGND)
+        [keeper=0] passn<10,15>(forceReset, nRstChAmp, rGND)   // forceReset in parallel
+        cap<32> (Vdd, nRstChAmp)
 
     }
 }
