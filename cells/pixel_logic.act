@@ -5,12 +5,12 @@ import "cells/logic/reset.act";
 import "cells/logic/on_handler.act";
 import "cells/logic/off_handler.act";
 
-defproc pixel_logic (bool? Vref, VIoffh, VON, VnOFF, RA, CA;
-               bool! Vreset, RR, CRON, CROFF) {
+defproc pixel_logic (bool? forceReset, Vref, VIoffh, VON, VnOFF, RA, CA, rGND;
+               bool! rstMirrAmp, nRstChAmp, RR, CRON, CROFF) {
     
     // Instantiate cells
+    reset r0(forceReset, Vref, RA, CA, rGND, rstMirrAmp, nRstChAmp);
     on_handler onh0(VON, RA, RR, CRON);
     off_handler offh0(VIoffh, VnOFF, RA, RR, CROFF);
-    reset r0(Vref, RA, CA, Vreset);
-
+    
 }

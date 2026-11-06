@@ -9,8 +9,8 @@ import "cells/core/ota_buff.act";
 import "cells/core/champ.act";
 import "cells/core/comparators.act";
 
-defproc pixel_core (bool? CRes, TX, CSel, Vpd, Vcasc, Vg_fb, Vipr, VnEnableBinning, VIprMirr, 
-                          VnRstMirrAmp, VIprBuff, Vidiff, VnRstChAmp, VIon, VIoff;
+defproc pixel_core (bool? CRes, TX, CSel, Vpd, Vcasc, Vg_fb, Vipr, enableBinning, VIprMirr,
+                          rstMirrAmp, byp, VIprBuff, Vidiff, nRstChAmp, VIon, VIoff;
                     bool! apsOut, Vpd_bin, Vpr_bin, VON, VnOFF) {
 
     // Declare internal signals
@@ -19,10 +19,10 @@ defproc pixel_core (bool? CRes, TX, CSel, Vpd, Vcasc, Vg_fb, Vipr, VnEnableBinni
     // Instantiate cells
     aps ap0({Vpd, CRes, TX, CSel}, apsOut);
     photoreceptor pr0({Vpd, Vcasc, Vg_fb, Vipr}, Vpr);
-    binning bi0({Vpd, Vpr, VnEnableBinning}, {Vpd_bin, Vpr_bin});
-    preamp pa0({Vpr, VIprMirr, VnRstMirrAmp}, VprAmp);
+    binning bi0({Vpd, Vpr, enableBinning}, {Vpd_bin, Vpr_bin});
+    preamp pa0({Vpr, VIprMirr, rstMirrAmp, byp}, VprAmp);
     ota_buff ob0({VprAmp, VIprBuff}, VprBuff);
-    champ ca0({Vpr, Vidiff, VnRstChAmp}, Vdiff);
+    champ ca0({VprBuff, Vidiff, nRstChAmp}, Vdiff);
     comparators ch0({Vdiff, VIon, VIoff}, {VON, VnOFF});
 
 }
